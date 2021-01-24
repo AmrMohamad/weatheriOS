@@ -58,13 +58,45 @@
 			children = (
 				2D16F75825BDE5BB0002A59D /* AppDelegate.swift */,
 				2D16F75A25BDE5BB0002A59D /* SceneDelegate.swift */,
-				2D16F75C25BDE5BB0002A59D /* ViewController.swift */,
-				2D16F75E25BDE5BB0002A59D /* Main.storyboard */,
+				2D16F76F25BDE80A0002A59D /* Model */,
+				2D16F76C25BDE6F70002A59D /* View */,
+				2D16F76E25BDE7F60002A59D /* Controller */,
 				2D16F76125BDE5BD0002A59D /* Assets.xcassets */,
 				2D16F76325BDE5BD0002A59D /* LaunchScreen.storyboard */,
 				2D16F76625BDE5BD0002A59D /* Info.plist */,
 			);
 			path = weatheriOS;
+			sourceTree = "<group>";
+		};
+		2D16F76C25BDE6F70002A59D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2D16F76D25BDE7E20002A59D /* Storyboards */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2D16F76D25BDE7E20002A59D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2D16F75E25BDE5BB0002A59D /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		2D16F76E25BDE7F60002A59D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2D16F75C25BDE5BB0002A59D /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2D16F76F25BDE80A0002A59D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
