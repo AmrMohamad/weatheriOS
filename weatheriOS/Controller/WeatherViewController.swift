@@ -18,11 +18,30 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        searchTextField.delegate = self
     }
 
     @IBAction func searchAction(_ sender: UIButton) {
-        
+        searchTextField.endEditing(true)
+        print(searchTextField.text!)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
+        print(searchTextField.text!)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        }else{
+            textField.placeholder = "Type a city name here...."
+            return false
+        }
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchTextField.text = ""
     }
     
 }
