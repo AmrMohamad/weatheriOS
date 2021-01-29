@@ -8,13 +8,22 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
-
+class WeatherViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var weatherConditionImage: UIImageView!
+    @IBOutlet weak var temperatureDegreeLabel: UILabel!
+    @IBOutlet weak var cityNameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
     }
 
-
+    @IBAction func searchAction(_ sender: UIButton) {
+        
+    }
+    
 }
 
