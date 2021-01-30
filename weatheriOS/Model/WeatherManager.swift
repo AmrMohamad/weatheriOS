@@ -8,11 +8,19 @@
 
 import Foundation
 
+protocol WeatherManagerDelegate {
+    func updateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didFailWithError (_ error: Error)
+}
+
 struct WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?units=metric"
     
+    var delegate :WeatherManagerDelegate?
+    
     func fetchWeather(cityName: String)  {
-        let url = "\(weatherURL)&appid=\(Constants.apiKey)&q=\(cityName)"
+        let cN = cityName.replacingOccurrences(of: " ", with: "%20")
+        let url = "\(weatherURL)&appid=\(Constants.apiKey)&q=\(cN)"
         performRequest(urlString: url)
         print(url)
     }
@@ -22,19 +30,21 @@ struct WeatherManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: urlFetched) { (data, response, error) in
                 if error != nil {
-                    print(error!)
+                    self.delegate?.didFailWithError(error!)
                     return
                 }
                 
                 if let safeData = data {
-                    self.parseJSON(weatherData: safeData)
+                    if let weather = self.parseJSON(weatherData: safeData){
+                        self.delegate?.updateWeather(self, weather: weather)
+                    }
                 }
             }
             task.resume()
         }
     }
     
-    func parseJSON(weatherData: Data) {
+    func parseJSON(weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do{
             let decodedData = try decoder.decode(WeatherData.self, from: weatherData)
@@ -43,11 +53,12 @@ struct WeatherManager {
             let name        = decodedData.name
             
             let weather = WeatherModel(conditionId: id, cityName: name, temperatureDegree: temp)
-            
-            print(weather.temperatureString)
-            print(temp)
+            return weather
+//            print(weather.temperatureString)
+//            print(temp)
         }catch{
-            print(error)
+            delegate?.didFailWithError(error)
+            return nil
         }
         
     }
