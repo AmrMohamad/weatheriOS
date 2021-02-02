@@ -32,6 +32,9 @@
                                                 </constraints>
                                                 <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <state key="normal" backgroundImage="location" catalog="system"/>
+                                                <connections>
+                                                    <action selector="setLocationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GoS-Z1-IWD"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Aqj-2H-AIy" userLabel="Search">
                                                 <rect key="frame" x="52" y="0.0" width="286" height="40"/>
@@ -84,8 +87,8 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlm-tv-bTq" userLabel="City Label">
-                                        <rect key="frame" x="157.5" y="319.5" width="75.5" height="38.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlm-tv-bTq" userLabel="City Label">
+                                        <rect key="frame" x="191.5" y="319.5" width="7" height="38.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
