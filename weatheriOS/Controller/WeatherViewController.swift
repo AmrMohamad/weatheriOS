@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  weatheriOS
 //
-//  Created by Amr Mohamad on 1/24/21.
+//  Created by AmrMohamad on 1/24/21.
 //  Copyright © 2021 Amr Mohamad. All rights reserved.
 //
 
