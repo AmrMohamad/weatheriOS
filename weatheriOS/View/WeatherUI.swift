@@ -8,26 +8,38 @@
 
 import UIKit
 
-class WeatherUI {
+struct WeatherUI {
+    
+    let bGImage : UIImageView = {
+        let image = UIImageView(image: UIImage(named: "Background"))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
+        return image
+    }()
+    
     let locationButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         return button
     }()
     
     let searchTextField: UITextField = {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
-        tf.placeholder     = "Search"
+//        tf.placeholder     = "Search"
         tf.textAlignment   = .right
         tf.font            = UIFont.systemFont(ofSize: 25, weight: .regular)
         tf.minimumFontSize = 12
-        tf.backgroundColor = .clear
+        tf.backgroundColor = .systemFill
         tf.borderStyle     = .roundedRect
         tf.autocapitalizationType = .words
         tf.returnKeyType = .go
+        tf.roundedTextFieldWithShadow(cornerRadius: 15.0)
+        tf.attributedPlaceholder = NSAttributedString(string: "Search",
+                                                      attributes: [.foregroundColor : UIColor.secondaryLabel])
         return tf
     }()
     
@@ -35,7 +47,7 @@ class WeatherUI {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        button.tintColor = .label
+//        button.tintColor = .label
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         return button
     }()
@@ -74,9 +86,25 @@ class WeatherUI {
         return label
     }()
 
-    let blurEffect: UIVisualEffectView = {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+//    let blurEffect: UIVisualEffectView = {
+//        let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(WeatherUI().searchTextField)
+//        NSLayoutConstraint.activate([
+//            WeatherUI().searchTextField.topAnchor.constraint(equalTo: view.topAnchor),
+//            WeatherUI().searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            WeatherUI().searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            WeatherUI().searchTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        ])
+//        return view
+//    }()
+}
+
+extension UITextField {
+    func roundedTextFieldWithShadow(cornerRadius: CGFloat){
+     self.layer.cornerRadius = cornerRadius
+     self.layer.shadowOffset = CGSize(width: 0.0, height: 16.0)
+     self.layer.shadowOpacity = 0.14
+     self.layer.shadowRadius = 9.0
+    }
 }
