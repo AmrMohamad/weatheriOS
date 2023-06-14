@@ -39,7 +39,7 @@ struct WeatherUI {
         tf.returnKeyType = .go
         tf.roundedTextFieldWithShadow(cornerRadius: 15.0)
         tf.attributedPlaceholder = NSAttributedString(string: "Search",
-                                                      attributes: [.foregroundColor : UIColor.secondaryLabel])
+                                                      attributes: [.foregroundColor : UIColor.label])
         return tf
     }()
     
@@ -72,8 +72,8 @@ struct WeatherUI {
     let dgreeValueLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "21"
-        label.font = UIFont.systemFont(ofSize: 80, weight: .black)
+        label.text = " "
+        label.font = UIFont.systemFont(ofSize: 50, weight: .black)
         label.textAlignment = .right
         return label
     }()
@@ -81,7 +81,7 @@ struct WeatherUI {
     let cityLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Lodon"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 30, weight: .regular)
         return label
     }()
@@ -102,9 +102,11 @@ struct WeatherUI {
 
 extension UITextField {
     func roundedTextFieldWithShadow(cornerRadius: CGFloat){
-     self.layer.cornerRadius = cornerRadius
-     self.layer.shadowOffset = CGSize(width: 0.0, height: 16.0)
-     self.layer.shadowOpacity = 0.14
-     self.layer.shadowRadius = 9.0
+        self.layer.cornerRadius = cornerRadius
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 16.0)
+        self.layer.shadowOpacity = 0.14
+        self.layer.shadowRadius = 9.0
     }
 }
+
+

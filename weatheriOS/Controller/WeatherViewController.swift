@@ -16,7 +16,7 @@ class WeatherViewController: UIViewController {
     var weatherConditionImage       = WeatherUI().conditionImage
     var temperatureDegreeLabel      = WeatherUI().dgreeValueLabel
     var cityNameLabel               = WeatherUI().cityLabel
-    var weatherConditionDescription = WeatherUI().dgreeSignLabel
+    var temperatureDegreeSignLabel  = WeatherUI().dgreeSignLabel
     var locationButton              = WeatherUI().locationButton
     var searchButton                = WeatherUI().searchButton
 
@@ -47,14 +47,15 @@ class WeatherViewController: UIViewController {
 
 }
 
+
 extension WeatherViewController: WeatherManagerDelegate {
     func updateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         
         DispatchQueue.main.async {
-            self.temperatureDegreeLabel.text      = weather.temperatureString
+            self.temperatureDegreeLabel.text      = "\(weather.temperatureString)°C"
             self.weatherConditionImage.image      = UIImage(systemName: weather.conditionName)
             self.cityNameLabel.text               = weather.cityName
-            self.weatherConditionDescription.text = weather.descriptionOfWeatherCondition
+//            self.weatherConditionDescription.text = weather.descriptionOfWeatherCondition
             
         }
         print(weather.temperatureDegree)
@@ -85,6 +86,7 @@ extension WeatherViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
             weatherManager.fetchWeather(byCityName: city)
+            print(city)
         }
         searchTextField.text = ""
     }
@@ -110,12 +112,12 @@ extension WeatherViewController: CLLocationManagerDelegate {
 
 extension WeatherViewController {
     func configUI(){
-        WeatherUI().locationButton.addTarget(self,
-                                             action: #selector(locationButtonPressed),
-                                             for: .touchUpInside)
-        WeatherUI().searchButton.addTarget(self,
-                                           action: #selector(searchButtonPressed),
-                                           for: .touchUpInside)
+        locationButton.addTarget(self,
+                                 action: #selector(locationButtonPressed),
+                                 for: .touchUpInside)
+        searchButton.addTarget(self,
+                               action: #selector(searchButtonPressed),
+                               for: .touchUpInside)
     }
     
     func setUI(){
@@ -135,6 +137,26 @@ extension WeatherViewController {
         searchStack.spacing      = 10
         view.addSubview(searchStack)
         
+        let currentWeatherStack = UIStackView(
+            arrangedSubviews: [
+                weatherConditionImage,
+                temperatureDegreeLabel,
+                cityNameLabel
+            ]
+        )
+        currentWeatherStack.translatesAutoresizingMaskIntoConstraints = false
+        currentWeatherStack.axis         = .vertical
+        currentWeatherStack.alignment    = .center
+        currentWeatherStack.distribution = .fill
+        currentWeatherStack.spacing      = 5
+        
+        let weatherDegreeBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        weatherDegreeBlurView.contentView.addSubview(currentWeatherStack)
+        weatherDegreeBlurView.translatesAutoresizingMaskIntoConstraints = false
+        weatherDegreeBlurView.layer.cornerRadius = 25
+        weatherDegreeBlurView.clipsToBounds = true
+        view.addSubview(weatherDegreeBlurView)
+        
         let searchStackConstraints = [
             searchStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,constant: 10),
             searchStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
@@ -151,6 +173,24 @@ extension WeatherViewController {
            searchButton.heightAnchor.constraint(equalToConstant: 40),
            searchButton.widthAnchor.constraint(equalToConstant: 40)
         ]
+        let w = view.layer.frame.width/2
+        let h = view.layer.frame.height/4
+        let weatherDegreeBlurViewConstraints = [
+            weatherDegreeBlurView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            weatherDegreeBlurView.topAnchor.constraint(equalTo: searchStack.bottomAnchor, constant: 15),
+            weatherDegreeBlurView.heightAnchor.constraint(equalToConstant: h),
+            weatherDegreeBlurView.widthAnchor.constraint(equalToConstant: w),
+            weatherConditionImage.heightAnchor.constraint(equalToConstant:  h/3),
+            weatherConditionImage.widthAnchor.constraint(equalToConstant: w/2),
+            currentWeatherStack.leadingAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.leadingAnchor,
+                                                         constant: 1),
+            currentWeatherStack.trailingAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.trailingAnchor,
+                                                          constant: -1),
+            currentWeatherStack.bottomAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.bottomAnchor,
+                                                        constant: -1),
+            currentWeatherStack.topAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.topAnchor,
+                                                         constant: 1)
+        ]
         
         let bGImageConstrains = [
            background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -163,6 +203,7 @@ extension WeatherViewController {
         NSLayoutConstraint.activate(searchStackConstraints)
         NSLayoutConstraint.activate(locationButtonConstraints)
         NSLayoutConstraint.activate(searchButtonConstraints)
+        NSLayoutConstraint.activate(weatherDegreeBlurViewConstraints)
 
     }
 }
