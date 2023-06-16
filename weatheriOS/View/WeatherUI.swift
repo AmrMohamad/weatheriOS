@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WeatherUI {
+class WeatherUI {
     
     let bGImage : UIImageView = {
         let image = UIImageView(image: UIImage(named: "Background"))
@@ -17,19 +17,18 @@ struct WeatherUI {
         return image
     }()
     
-    let locationButton: UIButton = {
+    var locationButton: UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(systemName: "location.magnifyingglass"), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         return button
-    }()
+    }
     
-    let searchTextField: UITextField = {
+    var searchTextField: UITextField {
         let tf = UITextField()
         tf.translatesAutoresizingMaskIntoConstraints = false
-//        tf.placeholder     = "Search"
         tf.textAlignment   = .right
         tf.font            = UIFont.systemFont(ofSize: 25, weight: .regular)
         tf.minimumFontSize = 12
@@ -41,32 +40,28 @@ struct WeatherUI {
         tf.attributedPlaceholder = NSAttributedString(string: "Search",
                                                       attributes: [.foregroundColor : UIColor.label])
         return tf
-    }()
+    }
     
-    let searchButton : UIButton = {
+    var searchButton : UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-//        button.tintColor = .label
+        //        button.tintColor = .label
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        
         return button
-    }()
+    }
     
     let conditionImage : UIImageView = {
-        let image = UIImageView(image: UIImage(systemName: "sun.max"))
+        let image = UIImageView(image: UIImage(systemName: "sun.max.fill"))
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.image?.withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFit
-        image.tintColor = .label
+//        image.tintColor = .label
+        image.layer.shadowOffset  = CGSize(width: 0.2, height: 0.2)
+        image.layer.shadowRadius  = 3.0
+        image.layer.shadowOpacity = 0.50
         return image
-    }()
-    
-    let dgreeSignLabel : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "°C"
-        label.font = UIFont.systemFont(ofSize: 100, weight: .light)
-        label.textAlignment = .right
-        return label
     }()
     
     let dgreeValueLabel : UILabel = {
@@ -75,6 +70,9 @@ struct WeatherUI {
         label.text = " "
         label.font = UIFont.systemFont(ofSize: 50, weight: .black)
         label.textAlignment = .right
+        label.layer.shadowOffset  = CGSize(width: 0.2, height: 0.2)
+        label.layer.shadowRadius  = 3.0
+        label.layer.shadowOpacity = 0.50
         return label
     }()
     
@@ -82,22 +80,12 @@ struct WeatherUI {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = " "
-        label.font = UIFont.systemFont(ofSize: 30, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 35, weight: .medium)
+        label.layer.shadowOffset  = CGSize(width: 0.2, height: 0.2)
+        label.layer.shadowRadius  = 3.0
+        label.layer.shadowOpacity = 0.50
         return label
     }()
-
-//    let blurEffect: UIVisualEffectView = {
-//        let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(WeatherUI().searchTextField)
-//        NSLayoutConstraint.activate([
-//            WeatherUI().searchTextField.topAnchor.constraint(equalTo: view.topAnchor),
-//            WeatherUI().searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            WeatherUI().searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            WeatherUI().searchTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ])
-//        return view
-//    }()
 }
 
 extension UITextField {

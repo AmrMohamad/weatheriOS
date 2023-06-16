@@ -32,7 +32,7 @@ struct WeatherModel {
         case 781:
             return "tornado"
         case 800:
-            return "sun.max"
+            return "sun.max.fill"
         case 801...802:
             return "cloud.fill"
         case 803...804:

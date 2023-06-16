@@ -16,9 +16,9 @@ class WeatherViewController: UIViewController {
     var weatherConditionImage       = WeatherUI().conditionImage
     var temperatureDegreeLabel      = WeatherUI().dgreeValueLabel
     var cityNameLabel               = WeatherUI().cityLabel
-    var temperatureDegreeSignLabel  = WeatherUI().dgreeSignLabel
     var locationButton              = WeatherUI().locationButton
     var searchButton                = WeatherUI().searchButton
+    
 
     var weatherManager  = WeatherManager()
     let locationManager = CLLocationManager()
@@ -40,6 +40,7 @@ class WeatherViewController: UIViewController {
     @objc func locationButtonPressed(_ sender: UIButton) {
         locationManager.requestLocation()
     }
+    
     @objc func searchButtonPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
         print(searchTextField.text!)
@@ -50,10 +51,11 @@ class WeatherViewController: UIViewController {
 
 extension WeatherViewController: WeatherManagerDelegate {
     func updateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        let imageCondition = UIImage(systemName: weather.conditionName)
         
         DispatchQueue.main.async {
             self.temperatureDegreeLabel.text      = "\(weather.temperatureString)°C"
-            self.weatherConditionImage.image      = UIImage(systemName: weather.conditionName)
+            self.weatherConditionImage.image      = imageCondition?.withRenderingMode(.alwaysOriginal)
             self.cityNameLabel.text               = weather.cityName
 //            self.weatherConditionDescription.text = weather.descriptionOfWeatherCondition
             
@@ -150,11 +152,12 @@ extension WeatherViewController {
         currentWeatherStack.distribution = .fill
         currentWeatherStack.spacing      = 5
         
-        let weatherDegreeBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        let weatherDegreeBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
         weatherDegreeBlurView.contentView.addSubview(currentWeatherStack)
         weatherDegreeBlurView.translatesAutoresizingMaskIntoConstraints = false
         weatherDegreeBlurView.layer.cornerRadius = 25
         weatherDegreeBlurView.clipsToBounds = true
+        weatherDegreeBlurView.alpha = 0.95
         view.addSubview(weatherDegreeBlurView)
         
         let searchStackConstraints = [
@@ -176,20 +179,55 @@ extension WeatherViewController {
         let w = view.layer.frame.width/2
         let h = view.layer.frame.height/4
         let weatherDegreeBlurViewConstraints = [
-            weatherDegreeBlurView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            weatherDegreeBlurView.topAnchor.constraint(equalTo: searchStack.bottomAnchor, constant: 15),
-            weatherDegreeBlurView.heightAnchor.constraint(equalToConstant: h),
-            weatherDegreeBlurView.widthAnchor.constraint(equalToConstant: w),
-            weatherConditionImage.heightAnchor.constraint(equalToConstant:  h/3),
-            weatherConditionImage.widthAnchor.constraint(equalToConstant: w/2),
-            currentWeatherStack.leadingAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.leadingAnchor,
-                                                         constant: 1),
-            currentWeatherStack.trailingAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.trailingAnchor,
-                                                          constant: -1),
-            currentWeatherStack.bottomAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.bottomAnchor,
-                                                        constant: -1),
-            currentWeatherStack.topAnchor.constraint(equalTo: weatherDegreeBlurView.contentView.topAnchor,
-                                                         constant: 1)
+            
+            weatherDegreeBlurView
+                .centerXAnchor
+                .constraint(equalTo: view.centerXAnchor),
+            weatherDegreeBlurView
+                .topAnchor
+                .constraint(
+                    equalTo: searchStack.bottomAnchor,
+                    constant: 15),
+            weatherDegreeBlurView
+                .heightAnchor
+                .constraint(equalToConstant: h),
+            weatherDegreeBlurView
+                .widthAnchor
+                .constraint(equalToConstant: w),
+            weatherConditionImage
+                .heightAnchor
+                .constraint(equalToConstant:  h/2),
+            weatherConditionImage
+                .widthAnchor
+                .constraint(equalToConstant: w/2),
+            currentWeatherStack
+                .leadingAnchor
+                .constraint(
+                    equalTo: weatherDegreeBlurView
+                        .contentView
+                        .leadingAnchor,
+                    constant: 1),
+            currentWeatherStack
+                .trailingAnchor
+                .constraint(
+                    equalTo: weatherDegreeBlurView
+                        .contentView
+                        .trailingAnchor,
+                    constant: -1),
+            currentWeatherStack
+                .bottomAnchor
+                .constraint(
+                    equalTo: weatherDegreeBlurView
+                        .contentView
+                        .bottomAnchor,
+                    constant: -1),
+            currentWeatherStack
+                .topAnchor
+                .constraint(
+                    equalTo: weatherDegreeBlurView
+                        .contentView
+                        .topAnchor,
+                    constant: 1)
         ]
         
         let bGImageConstrains = [
